@@ -17,6 +17,11 @@ function App() {
     setInputValue("");
   }
 
+  function handleDeleteBook(bookId) {
+    const filtered = books.filter((book) => book.id !== bookId);
+    setBooks(filtered);
+  }
+
   return (
     <div>
       <h1>My Book List</h1>
@@ -31,8 +36,8 @@ function App() {
         {books.map((book) => (
           <>
             <div>
-              <li>{book.bookName}</li>
-              <button>Delete</button>
+              <li key={book.id}>{book.bookName}</li>
+              <button onClick={() => handleDeleteBook(book.id)}>Delete</button>
               <button>Finished</button>
             </div>
           </>
