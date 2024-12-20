@@ -22,6 +22,16 @@ function App() {
     setBooks(filtered);
   }
 
+  function handleToggleReadStatus(bookId) {
+    const updatedBooks = books.map((book) => {
+      if (book.id === bookId) {
+        return { ...book, isRead: !book.isRead };
+      }
+      return book;
+    });
+    setBooks(updatedBooks);
+  }
+
   return (
     <div>
       <h1>My Book List</h1>
@@ -36,9 +46,18 @@ function App() {
         {books.map((book) => (
           <>
             <div>
-              <li key={book.id}>{book.bookName}</li>
+              <li
+                key={book.id}
+                style={{
+                  textDecoration: book.isRead ? "line-through" : "none",
+                }}
+              >
+                {book.bookName}
+              </li>
               <button onClick={() => handleDeleteBook(book.id)}>Delete</button>
-              <button>Finished</button>
+              <button onClick={() => handleToggleReadStatus(book.id)}>
+                Finished
+              </button>
             </div>
           </>
         ))}
