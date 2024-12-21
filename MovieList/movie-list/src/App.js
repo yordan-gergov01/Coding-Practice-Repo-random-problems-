@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [inputValue, setInputValue] = useState("");
   const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    const storedBooks = localStorage.getItem("books");
+    if (storedBooks) {
+      setBooks(JSON.parse(storedBooks));
+    }
+  }, []);
 
   function handleAddNewBook() {
     if (inputValue.trim() === "") return;
@@ -13,12 +20,17 @@ function App() {
       isRead: false,
     };
 
-    setBooks([...books, newBook]);
+    const booksAfterUpdate = [...books, newBook];
+    setBooks(booksAfterUpdate);
+    localStorage.setItem("books", JSON.stringify(booksAfterUpdate));
+
     setInputValue("");
   }
 
   function handleDeleteBook(bookId) {
     const filtered = books.filter((book) => book.id !== bookId);
+
+    localStorage.setItem("books", JSON.stringify(filtered));
     setBooks(filtered);
   }
 
@@ -30,6 +42,7 @@ function App() {
       return book;
     });
     setBooks(updatedBooks);
+    localStorage.setItem("books", JSON.stringify(updatedBooks));
   }
 
   return (
