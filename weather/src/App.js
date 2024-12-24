@@ -17,7 +17,6 @@ function App() {
       const response = await fetch(requestUrl);
       const data = await response.json();
       setData(data);
-      console.log(data); // afterwards to delete
       setCity("");
     } catch (error) {
       console.log(error);
