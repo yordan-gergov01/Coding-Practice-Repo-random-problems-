@@ -26,7 +26,7 @@ function App() {
   return (
     <div>
       <h1>Expense Tracker 💸</h1>
-      <Summary />
+      <Summary transactions={transactions} />
       <TransactionForm onAddTransaction={addTransaction} />
       <TransactionList
         transactions={transactions}
