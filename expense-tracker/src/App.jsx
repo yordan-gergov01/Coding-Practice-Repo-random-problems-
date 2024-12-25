@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Summary from "./components/Summary";
 import TransactionForm from "./components/TransactionForm";
+import TransactionList from "./components/TransactionList";
 
 function App() {
   const [transactions, setTransactions] = useState([]);
@@ -13,7 +14,13 @@ function App() {
       category,
     };
 
-    setTransactions((prev) => [prev, newTransaction]);
+    setTransactions((prev) => [...prev, newTransaction]);
+  }
+
+  function deleteTransaction(id) {
+    setTransactions((prev) =>
+      prev.filter((transaction) => transaction.id !== id)
+    );
   }
 
   return (
@@ -21,6 +28,10 @@ function App() {
       <h1>Expense Tracker 💸</h1>
       <Summary />
       <TransactionForm onAddTransaction={addTransaction} />
+      <TransactionList
+        transactions={transactions}
+        onDeleteTransaction={deleteTransaction}
+      />
     </div>
   );
 }

@@ -37,6 +37,7 @@ function TransactionForm({ onAddTransaction }) {
           <option value="food">Food</option>
           <option value="transport">Transport</option>
           <option value="shopping">Shopping</option>
+          <option value="sport">Sport</option>
         </select>
         <button type="submit">Add Transaction</button>
       </form>
