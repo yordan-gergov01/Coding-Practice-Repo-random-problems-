@@ -7,22 +7,22 @@ function Summary({ transactions }) {
     .filter((transaction) => transaction.amount < 0)
     .reduce((sum, transaction) => sum + transaction.amount, 0);
 
-  const balance = totalIncome - totalExpenses;
+  const balance =
+    transactions.category === "expense"
+      ? totalIncome - totalExpenses
+      : totalIncome + totalExpenses;
 
   return (
     <div>
       <h2>Summary</h2>
       <p>
-        <strong>Income: </strong>
-        {totalIncome}$
+        <strong>Income: </strong>${totalIncome.toFixed(2)}$
       </p>
       <p>
-        <strong>Expenses: </strong>
-        {totalExpenses}$
+        <strong>Expenses: </strong>${Math.abs(totalExpenses).toFixed(2)}$
       </p>
       <p>
-        <strong>Balance: </strong>
-        {balance}$
+        <strong>Balance: </strong>${balance.toFixed(2)}
       </p>
     </div>
   );

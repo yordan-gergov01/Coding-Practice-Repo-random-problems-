@@ -3,7 +3,7 @@ import { useState } from "react";
 function TransactionForm({ onAddTransaction }) {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("food");
+  const [category, setCategory] = useState("income");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -14,7 +14,7 @@ function TransactionForm({ onAddTransaction }) {
 
     setDescription("");
     setAmount("");
-    setCategory("food");
+    setCategory("");
   }
 
   return (
@@ -34,10 +34,8 @@ function TransactionForm({ onAddTransaction }) {
           onChange={(e) => setAmount(e.target.value)}
         />
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option value="food">Food</option>
-          <option value="transport">Transport</option>
-          <option value="shopping">Shopping</option>
-          <option value="sport">Sport</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
         </select>
         <button type="submit">Add Transaction</button>
       </form>

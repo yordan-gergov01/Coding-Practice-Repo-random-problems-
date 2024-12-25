@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import Summary from "./components/Summary";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
@@ -19,10 +20,13 @@ function App() {
   }, [transactions]);
 
   function addTransaction(description, amount, category) {
+    const parsedAmount =
+      category === "expense" ? -Math.abs(amount) : Math.abs(amount);
+
     const newTransaction = {
       id: Date.now(),
       description,
-      amount: parseFloat(amount),
+      amount: parsedAmount,
       category,
     };
 
