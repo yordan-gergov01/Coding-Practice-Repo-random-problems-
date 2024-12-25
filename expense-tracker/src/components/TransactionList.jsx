@@ -1,19 +1,25 @@
 function TransactionList({ transactions, onDeleteTransaction }) {
   return (
-    <div>
-      <h2>Transaction List</h2>
-      <ul>
-        {transactions.map((transaction) => (
-          <li key={transaction.id}>
-            {transaction.description} - ${transaction.amount} (
-            {transaction.category})
-            <button onClick={() => onDeleteTransaction(transaction.id)}>
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul>
+      {transactions.map((transaction) => (
+        <li key={transaction.id}>
+          <span>{transaction.description} </span>
+          <span>
+            ${transaction.amount.toFixed(2)} -{" "}
+            <strong
+              style={{
+                color: transaction.category === "income" ? "green" : "red",
+              }}
+            >
+              {transaction.category.toUpperCase()}
+            </strong>
+          </span>
+          <button onClick={() => onDeleteTransaction(transaction.id)}>
+            Delete
+          </button>
+        </li>
+      ))}
+    </ul>
   );
 }
 
