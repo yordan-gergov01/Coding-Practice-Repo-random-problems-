@@ -1,3 +1,5 @@
+import "./TransactionList.css";
+
 function TransactionList({ transactions, onDeleteTransaction }) {
   return (
     <ul>

@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import "./TransactionForm.css";
+
 function TransactionForm({ onAddTransaction }) {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
@@ -18,7 +20,7 @@ function TransactionForm({ onAddTransaction }) {
   }
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Add New Transaction</h2>
       <form onSubmit={handleSubmit}>
         <input
