@@ -1,3 +1,5 @@
+import "./Summary.css";
+
 function Summary({ transactions }) {
   const totalIncome = transactions
     .filter((transaction) => transaction.amount > 0)
@@ -13,7 +15,7 @@ function Summary({ transactions }) {
       : totalIncome + totalExpenses;
 
   return (
-    <div>
+    <div className="summary-container">
       <h2>Summary</h2>
       <p>
         <strong>Income: </strong>${totalIncome.toFixed(2)}$

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Summary from "./components/Summary";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
+import "./App.css";
 
 import { getInitialTransactions } from "./utils/localStorage";
 
@@ -34,7 +35,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>Expense Tracker 💸</h1>
       <TransactionForm onAddTransaction={addTransaction} />
       <TransactionList
