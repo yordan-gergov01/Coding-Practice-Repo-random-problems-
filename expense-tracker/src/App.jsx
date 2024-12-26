@@ -4,16 +4,10 @@ import Summary from "./components/Summary";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
 
+import { getInitialTransactions } from "./utils/localStorage";
+
 function App() {
-  const [transactions, setTransactions] = useState([]);
-
-  useEffect(() => {
-    const storedTransactions = localStorage.getItem("transactions");
-
-    if (storedTransactions) {
-      setTransactions(JSON.parse(storedTransactions));
-    }
-  }, []);
+  const [transactions, setTransactions] = useState(getInitialTransactions);
 
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(transactions));
@@ -42,12 +36,12 @@ function App() {
   return (
     <div>
       <h1>Expense Tracker 💸</h1>
-      <Summary transactions={transactions} />
       <TransactionForm onAddTransaction={addTransaction} />
       <TransactionList
         transactions={transactions}
         onDeleteTransaction={deleteTransaction}
       />
+      <Summary transactions={transactions} />
     </div>
   );
 }
