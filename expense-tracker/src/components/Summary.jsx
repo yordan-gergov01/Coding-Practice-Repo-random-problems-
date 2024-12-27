@@ -15,18 +15,20 @@ function Summary({ transactions }) {
       : totalIncome + totalExpenses;
 
   return (
-    <div className="summary-container">
-      <h2>Summary</h2>
-      <p>
-        <strong>Income: </strong>${totalIncome.toFixed(2)}$
-      </p>
-      <p>
-        <strong>Expenses: </strong>${Math.abs(totalExpenses).toFixed(2)}$
-      </p>
-      <p>
-        <strong>Balance: </strong>${balance.toFixed(2)}
-      </p>
-    </div>
+    transactions.length > 0 && (
+      <div className="summary-container">
+        <h2>Summary</h2>
+        <p>
+          <strong>Income: </strong>${totalIncome.toFixed(2)}$
+        </p>
+        <p>
+          <strong>Expenses: </strong>${Math.abs(totalExpenses).toFixed(2)}$
+        </p>
+        <p>
+          <strong>Balance: </strong>${balance.toFixed(2)}
+        </p>
+      </div>
+    )
   );
 }
 
