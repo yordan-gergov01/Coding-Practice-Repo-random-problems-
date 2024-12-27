@@ -2,26 +2,28 @@ import "./TransactionList.css";
 
 function TransactionList({ transactions, onDeleteTransaction }) {
   return (
-    <ul>
-      {transactions.map((transaction) => (
-        <li key={transaction.id}>
-          <span>{transaction.description} </span>
-          <span>
-            ${transaction.amount.toFixed(2)} -{" "}
-            <strong
+    <div className="transaction-list">
+      <ul>
+        {transactions.map((transaction) => (
+          <li key={transaction.id}>
+            <span className="description">{transaction.description}</span>
+            <span
+              className="category"
               style={{
-                color: transaction.category === "income" ? "green" : "red",
+                backgroundColor:
+                  transaction.category === "income" ? "green" : "red",
               }}
             >
               {transaction.category.toUpperCase()}
-            </strong>
-          </span>
-          <button onClick={() => onDeleteTransaction(transaction.id)}>
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+            </span>
+            <span className="amount">${transaction.amount.toFixed(2)}</span>
+            <button onClick={() => onDeleteTransaction(transaction.id)}>
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

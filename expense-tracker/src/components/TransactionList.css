@@ -1,15 +1,50 @@
+.transaction-list {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f9fafc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 li {
   display: flex;
   border-bottom: 1px solid #eee;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
+  padding: 10px;
+  gap: 10px;
+}
+
+li .description {
+  flex: 2;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+li .amount {
+  flex: 1;
+  text-align: right;
+  font-size: 1rem;
+}
+
+li .category {
+  flex: 1;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #4caf50;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  text-transform: uppercase;
 }
 
 li button {
