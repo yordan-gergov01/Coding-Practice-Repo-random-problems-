@@ -16,7 +16,7 @@ function TransactionForm({ onAddTransaction }) {
 
     setDescription("");
     setAmount("");
-    setCategory("");
+    setCategory("income");
   }
 
   return (
