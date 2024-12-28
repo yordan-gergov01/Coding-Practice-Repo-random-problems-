@@ -25,7 +25,7 @@ function App() {
       category,
     };
 
-    setTransactions((prev) => [...prev, newTransaction]);
+    setTransactions([...transactions, newTransaction]);
   }
 
   function deleteTransaction(id) {
