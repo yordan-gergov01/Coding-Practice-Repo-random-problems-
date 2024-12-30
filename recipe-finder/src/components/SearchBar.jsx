@@ -9,6 +9,7 @@ function SearchBar({ onSearch }) {
     if (query.trim() === "") return;
 
     onSearch(query);
+    setQuery("");
   }
   return (
     <form onSubmit={handleSubmit}>
