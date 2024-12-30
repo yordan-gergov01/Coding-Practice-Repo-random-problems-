@@ -2,6 +2,7 @@ import { useState } from "react";
 import SearchBar from "./components/SearchBar";
 import RecipeList from "./components/RecipeList";
 import RecipeDetails from "./components/RecipeDetails";
+import "./components/RecipeDetails.css";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
