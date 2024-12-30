@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SearchBar from "./components/SearchBar";
 import RecipeList from "./components/RecipeList";
+import RecipeDetails from "./components/RecipeDetails";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -27,6 +28,12 @@ function App() {
       <h1>Recipe Finder 🍨</h1>
       <SearchBar onSearch={getRecipes} />
       <RecipeList recipes={recipes} onSelectRecipe={handleSelectRecipe} />
+      {selectedRecipe && (
+        <RecipeDetails
+          recipe={selectedRecipe}
+          onClose={() => setSelectedRecipe(null)}
+        />
+      )}
     </div>
   );
 }
