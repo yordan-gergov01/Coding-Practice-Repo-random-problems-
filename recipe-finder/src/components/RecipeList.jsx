@@ -1,7 +1,7 @@
 function RecipeList({ recipes, onSelectRecipe }) {
-  if (recipes.length === 0) {
-    return <p>No recipes found. Please, try searching for something else!</p>;
-  }
+  //   if (recipes.length === 0) {
+  //     return <p>No recipes found. Please, try searching for something else!</p>;
+  //   }
 
   return (
     <div>
