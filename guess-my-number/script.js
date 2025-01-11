@@ -5,6 +5,7 @@ const checkButton = document.querySelector('.check');
 const resetButton = document.querySelector('.again');
 
 let score = 20;
+let highscore = 0;
 
 checkButton.addEventListener('click', () => {
   const guess = Number(document.querySelector('.guess').value);
@@ -39,6 +40,11 @@ checkButton.addEventListener('click', () => {
     document.querySelector('.score').textContent = score;
     document.body.style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
+
+    if (score > highscore) {
+      highscore = score;
+      document.querySelector('.highscore').textContent = highscore;
+    }
   }
 });
 
