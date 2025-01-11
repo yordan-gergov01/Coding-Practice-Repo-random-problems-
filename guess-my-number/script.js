@@ -35,5 +35,7 @@ button.addEventListener('click', () => {
     document.querySelector('.message').textContent = '🎉 Correct Number!';
     score++;
     document.querySelector('.score').textContent = score;
+    document.body.style.backgroundColor = '#60b347';
+    document.querySelector('.number').style.width = '30rem';
   }
 });
