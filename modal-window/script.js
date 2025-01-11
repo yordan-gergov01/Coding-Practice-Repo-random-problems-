@@ -1,13 +1,16 @@
 'use strict';
 
-const showButton = document.querySelector('.show-modal');
+const showButton = document.querySelectorAll('.show-modal');
 const closeButton = document.querySelector('.close-modal');
 const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
 
-showButton.addEventListener('click', () => {
-  modal.style.display = 'block';
-});
+showButton.forEach(button =>
+  button.addEventListener('click', () => {
+    modal.classList.remove('hidden');
+  })
+);
 
 closeButton.addEventListener('click', () => {
-  modal.style.display = 'none';
+  modal.classList.add('hidden');
 });
