@@ -11,15 +11,30 @@ const rollDiceButton = document.querySelector('.btn--roll');
 const playerOneSection = document.querySelector('.player--0');
 const playerTwoSection = document.querySelector('.player--1');
 
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
+let scores, currentScore, activePlayer, playing;
 
-playerOneScore.textContent = 0;
-playerTwoScore.textContent = 0;
+function init() {
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
 
-dice.classList.add('hidden');
+  playerOneScore.textContent = 0;
+  playerTwoScore.textContent = 0;
+  playerOneCurrent.textContent = 0;
+  playerTwoCurrent.textContent = 0;
+
+  playerOneSection.classList.remove('player--winner');
+  playerTwoSection.classList.remove('player--winner');
+  dice.classList.add('hidden');
+  playerOneSection.classList.add('player--active');
+  playerTwoSection.classList.remove('player--active');
+
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
+}
+init();
 
 function switchPlayer() {
   document.getElementById(`current--${activePlayer}`).textContent = 0;
@@ -52,7 +67,7 @@ holdButton.addEventListener('click', () => {
     document.getElementById(`score--${activePlayer}`).textContent =
       scores[activePlayer];
 
-    if (scores[activePlayer] >= 20) {
+    if (scores[activePlayer] >= 100) {
       playing = false;
       dice.classList.add('hidden');
       document
@@ -66,3 +81,5 @@ holdButton.addEventListener('click', () => {
     }
   }
 });
+
+newGameButton.addEventListener('click', init);
