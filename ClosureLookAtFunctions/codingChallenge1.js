@@ -8,7 +8,7 @@
 
 // Your tasks:
 
-// 1. Create a method called 'registerNewAnswer' on the 'poll' object. The
+// ✅ 1. Create a method called 'registerNewAnswer' on the 'poll' object. The
 // method does 2 things:
 
 // 1.1.
