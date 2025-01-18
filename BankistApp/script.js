@@ -77,6 +77,12 @@ function displayMovements(movements) {
 }
 displayMovements(account1.movements);
 
+function calcDisplayBalance(movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance}€`;
+}
+calcDisplayBalance(account1.movements);
+
 function createUsernames(accounts) {
   accounts.forEach(account => {
     account.username = account.owner
@@ -87,4 +93,13 @@ function createUsernames(accounts) {
   });
 }
 createUsernames(accounts);
-console.log(accounts);
+
+// function calcPrintBalance(accounts) {
+//   const balance = accounts.forEach(account => {
+//     account.balance = account.movements.reduce((acc, curr) => {
+//       acc + curr, 0;
+//     });
+//   });
+//   labelBalance.innerText = balance;
+// }
+// calcPrintBalance(accounts);
