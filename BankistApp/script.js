@@ -75,35 +75,32 @@ function displayMovements(movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 }
-displayMovements(account1.movements);
 
 function calcDisplayBalance(movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${balance}€`;
 }
-calcDisplayBalance(account1.movements);
 
-function calcDisplaySummary(movements) {
-  const incomes = movements
+function calcDisplaySummary(acc) {
+  const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  const outcomes = movements
+  labelSumIn.textContent = `${incomes}€`;
+
+  const outcomes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-
-  labelSumIn.textContent = `${incomes}€`;
   labelSumOut.textContent = `${Math.abs(outcomes)}€`;
 
-  //methods chaining cause performance issues and that here is only for practice that I use
-  const interest = movements
+  //the chain of methods is here for the reason that I only want to practice and exercise them
+  const interest = acc.movements
     .filter(mov => mov > 0)
-    .map(mov => mov * 0.012)
+    .map(mov => (mov * acc.interestRate) / 100)
     .filter(int => int >= 1)
     .reduce((acc, mov) => acc + mov, 0);
 
   labelSumInterest.textContent = `${interest}€`;
 }
-calcDisplaySummary(account1.movements);
 
 function createUsernames(accounts) {
   accounts.forEach(account => {
@@ -116,12 +113,31 @@ function createUsernames(accounts) {
 }
 createUsernames(accounts);
 
-// function calcPrintBalance(accounts) {
-//   const balance = accounts.forEach(account => {
-//     account.balance = account.movements.reduce((acc, curr) => {
-//       acc + curr, 0;
-//     });
-//   });
-//   labelBalance.innerText = balance;
-// }
-// calcPrintBalance(accounts);
+let currentAccount;
+
+btnLogin.addEventListener('click', event => {
+  event.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value && inputLoginPin.value
+  );
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Clear the input fields
+    inputLoginPin.value = '';
+    inputLoginUsername.value = '';
+    inputLoginPin.blur();
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 1;
+
+    // Display movements
+    displayMovements(currentAccount.movements);
+    // Display balance
+    calcDisplayBalance(currentAccount.movements);
+    // Display summary
+    calcDisplaySummary(currentAccount);
+  }
+});
