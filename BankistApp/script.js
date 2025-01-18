@@ -94,6 +94,7 @@ function calcDisplaySummary(movements) {
   labelSumIn.textContent = `${incomes}€`;
   labelSumOut.textContent = `${Math.abs(outcomes)}€`;
 
+  //methods chaining cause performance issues and that here is only for practice that I use
   const interest = movements
     .filter(mov => mov > 0)
     .map(mov => mov * 0.012)
