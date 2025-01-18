@@ -76,3 +76,15 @@ function displayMovements(movements) {
   });
 }
 displayMovements(account1.movements);
+
+function createUsernames(accounts) {
+  accounts.forEach(account => {
+    account.username = account.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+}
+createUsernames(accounts);
+console.log(accounts);
