@@ -1,4 +1,4 @@
-// Coding Challenge #4
+// Coding Challenge #5
 
 // Julia and Kate are still studying dogs, and this time they are studying if dogs are
 // eating too much or too little.
