@@ -170,3 +170,25 @@ btnTransfer.addEventListener('click', event => {
     inputTransferAmount.value = '';
   }
 });
+
+btnClose.addEventListener('click', event => {
+  event.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const deletedAccountIndex = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    accounts.splice(deletedAccountIndex, 1);
+    // Variant 2 with filter
+    // const updatedAccounts = accounts.filter(
+    //   acc => acc.username !== currentAccount.username
+    // );
+    containerApp.style.opacity = 0;
+    labelWelcome.textContent = 'Log in to get started';
+  }
+  inputCloseUsername.value = '';
+  inputClosePin.value = '';
+});
