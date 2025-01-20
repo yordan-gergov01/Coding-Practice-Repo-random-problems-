@@ -126,6 +126,15 @@ function updateUI(acc) {
 
 let currentAccount;
 
+const currentDate = new Date();
+let day = currentDate.getDate();
+let month = currentDate.getMonth() + 1;
+let year = currentDate.getFullYear();
+let hour = currentDate.getHours();
+let minutes = currentDate.getMinutes();
+
+labelDate.textContent = `${day}/${month}/${year}, ${hour}:${minutes}`;
+
 btnLogin.addEventListener('click', event => {
   event.preventDefault();
 
