@@ -70,7 +70,7 @@ function displayMovements(movements, sort = false) {
           <div class="movements__type movements__type--${type}">${
       index + 1
     } ${type}</div>
-          <div class="movements__value">${movement}</div>
+          <div class="movements__value">${movement.toFixed(2)}€</div>
         </div>
       `;
 
@@ -80,19 +80,19 @@ function displayMovements(movements, sort = false) {
 
 function calcDisplayBalance(acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}€`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
 }
 
 function calcDisplaySummary(acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
 
   const outcomes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+  labelSumOut.textContent = `${Math.abs(outcomes).toFixed(2)}€`;
 
   //the chain of methods is here for the reason that I only want to practice and exercise them
   const interest = acc.movements
@@ -101,7 +101,7 @@ function calcDisplaySummary(acc) {
     .filter(int => int >= 1)
     .reduce((acc, mov) => acc + mov, 0);
 
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 }
 
 function createUsernames(accounts) {
@@ -176,7 +176,7 @@ btnTransfer.addEventListener('click', event => {
 btnLoan.addEventListener('click', event => {
   event.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     currentAccount.movements.push(amount);
