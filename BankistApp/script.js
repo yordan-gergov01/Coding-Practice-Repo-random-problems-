@@ -123,7 +123,29 @@ function updateUI(acc) {
   calcDisplaySummary(acc);
 }
 
-let currentAccount;
+function startLogOutTimer() {
+  function tick() {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+
+    labelTimer.textContent = `${min}:${sec}`;
+
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+    time--;
+  }
+  let time = 600;
+
+  tick();
+  const timer = setInterval(tick, 1000);
+
+  return timer;
+}
+
+let currentAccount, timer;
 
 const currentDate = new Date();
 let day = `${currentDate.getDate()}`.padStart(2, 0);
@@ -152,6 +174,10 @@ btnLogin.addEventListener('click', event => {
     }`;
     containerApp.style.opacity = 1;
 
+    // Timer
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer();
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -176,6 +202,10 @@ btnTransfer.addEventListener('click', event => {
 
     updateUI(currentAccount);
 
+    // Reset timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
+
     inputTransferTo.value = '';
     inputTransferAmount.value = '';
   }
@@ -191,6 +221,10 @@ btnLoan.addEventListener('click', event => {
       currentAccount.movements.push(amount);
 
       updateUI(currentAccount);
+
+      // Reset timer
+      clearInterval(timer);
+      timer = startLogOutTimer();
     }, 3000);
   }
   inputLoanAmount.value = '';
