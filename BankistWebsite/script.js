@@ -7,6 +7,8 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.getElementById('section--1');
 
 const openModal = function (event) {
   event.preventDefault();
@@ -19,8 +21,7 @@ const closeModal = function () {
   overlay.classList.add('hidden');
 };
 
-for (let i = 0; i < btnsOpenModal.length; i++)
-  btnsOpenModal[i].addEventListener('click', openModal);
+btnsOpenModal.forEach(button => button.addEventListener('click', openModal));
 
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
@@ -29,4 +30,19 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
   }
+});
+
+btnScollTo.addEventListener('click', event => {
+  event.preventDefault();
+
+  // const s1Coords = section1.getBoundingClientRect();
+
+  // Old way
+  // window.scrollTo({
+  //   left: s1Coords.left + window.scrollX,
+  //   top: s1Coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+  section1.scrollIntoView({ behavior: 'smooth' });
 });
