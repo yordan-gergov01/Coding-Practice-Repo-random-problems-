@@ -64,7 +64,6 @@ function displayMovements(movements, sort = false) {
 
   movs.forEach((movement, index) => {
     const type = movement > 0 ? 'deposit' : 'withdrawal';
-
     const html = `
     <div class="movements__row">
           <div class="movements__type movements__type--${type}">${
@@ -127,11 +126,11 @@ function updateUI(acc) {
 let currentAccount;
 
 const currentDate = new Date();
-let day = currentDate.getDate();
-let month = currentDate.getMonth() + 1;
+let day = `${currentDate.getDate()}`.padStart(2, 0);
+let month = `${currentDate.getMonth() + 1}`.padStart(2, 0);
 let year = currentDate.getFullYear();
-let hour = currentDate.getHours();
-let minutes = currentDate.getMinutes();
+let hour = `${currentDate.getHours()}`.padStart(2, 0);
+let minutes = `${currentDate.getMinutes()}`.padStart(2, 0);
 
 labelDate.textContent = `${day}/${month}/${year}, ${hour}:${minutes}`;
 
@@ -188,12 +187,13 @@ btnLoan.addEventListener('click', event => {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    currentAccount.movements.push(amount);
+    setTimeout(() => {
+      currentAccount.movements.push(amount);
 
-    updateUI(currentAccount);
-
-    inputLoanAmount.value = '';
+      updateUI(currentAccount);
+    }, 3000);
   }
+  inputLoanAmount.value = '';
 });
 
 btnClose.addEventListener('click', event => {
