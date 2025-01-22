@@ -13,8 +13,8 @@ const tabsContent = document.querySelectorAll('.operations__content');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
 const slides = document.querySelectorAll('.slide');
-
 const slider = document.querySelectorAll('.slide');
+const dotContainer = document.querySelector('.dots');
 
 const openModal = function (event) {
   event.preventDefault();
@@ -203,13 +203,30 @@ imgTargets.forEach(img => imgObserver.observe(img));
 let curSlide = 0;
 const maxSlide = slides.length;
 
+function createDots() {
+  slides.forEach((_, index) => {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${index}"></button>`
+    );
+  });
+}
+
+function activateDot(slide) {
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add('dots__dot--active');
+}
+
 function goToSlide(slide) {
   slides.forEach(
     (s, index) => (s.style.transform = `translateX(${100 * (index - slide)}%)`)
   );
 }
-
-goToSlide(0);
 
 function nextSlide() {
   if (curSlide === maxSlide - 1) {
@@ -219,6 +236,7 @@ function nextSlide() {
   }
 
   goToSlide(curSlide);
+  activateDot(curSlide);
 }
 
 function prevSlide() {
@@ -228,8 +246,29 @@ function prevSlide() {
     curSlide--;
   }
   goToSlide(curSlide);
+  activateDot(curSlide);
 }
 
-// Next and previos slide events
+function init() {
+  goToSlide(0);
+  createDots();
+  activateDot(0);
+}
+init();
+
+// Next and previous slide events
 btnRight.addEventListener('click', nextSlide);
 btnLeft.addEventListener('click', prevSlide);
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'ArrowLeft') prevSlide();
+  e.key === 'ArrowRight' && nextSlide();
+});
+
+dotContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    curSlide = Number(e.target.dataset.slide);
+    goToSlide(curSlide);
+    activateDot(curSlide);
+  }
+});
