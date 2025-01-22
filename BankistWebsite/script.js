@@ -113,3 +113,36 @@ function handleHover(event) {
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(1));
+
+// Sticky navigation
+// const initialCoords = section1.getBoundingClientRect();
+
+// Pretty bad for performance with that scroll event
+// window.addEventListener('scroll', function () {
+//   if (window.scrollY > initialCoords.top) {
+//     nav.classList.add('sticky');
+//   } else {
+//     nav.classList.remove('sticky');
+//   }
+// });
+
+// We want the nav to be sticky positioned when the header is out of view
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+function stickyNav(entries) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+}
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0, // when 0% of the header is visible
+  rootMargin: `-${navHeight}px`, // box of 90 pixels that will be applied outside of target element
+});
+
+headerObserver.observe(header);
