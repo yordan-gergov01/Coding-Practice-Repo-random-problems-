@@ -1,17 +1,18 @@
-// function Car(brand, horsePower) {
-//   this.brand = brand;
-//   this.horsePower = horsePower;
-// }
-
-// const myCar = new Car("Seat", 230);
-// console.log(myCar);
-
-class Car {
-  constructor(brand, horsePower) {
-    this.brand = brand;
-    this.horsePower = horsePower;
-  }
+function Person(firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
 }
 
-const myCar = new Car("Seat", 230);
-console.log(myCar);
+function Student(firstName, birthYear, course) {\
+  // Better way because of DRY principle
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+}
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const yordan = new Student("Yordan", 2001, "Computer Science");
+
+yordan.introduce();
