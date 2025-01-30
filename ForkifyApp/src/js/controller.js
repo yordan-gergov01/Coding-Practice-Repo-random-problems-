@@ -5,6 +5,7 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
 
 // Comming from Parcel
 if (module.hot) {
@@ -40,15 +41,27 @@ async function controlSearchResult() {
     await model.loadSearchResults(query);
 
     // 3) Render results
-    resultsView.render(model.state.search.results);
+    resultsView.render(model.getSearchResultsPage(1));
+
+    // 4) Render initial pagination buttons
+    paginationView.render(model.state.search);
   } catch (error) {
     // recipeView.renderError();
     console.log(error);
   }
 }
 
+function controlPagination(goToPage) {
+  // 1) Render NEW results
+  resultsView.render(model.getSearchResultsPage(goToPage));
+
+  // 2) Render NEW pagination buttons
+  paginationView.render(model.state.search);
+}
+
 function init() {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResult);
+  paginationView.addHandleClick(controlPagination);
 }
 init();
