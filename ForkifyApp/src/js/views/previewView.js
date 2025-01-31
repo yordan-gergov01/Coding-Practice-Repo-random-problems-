@@ -3,7 +3,7 @@ import View from './View.js';
 class PreviewView extends View {
   _parentElement = '';
 
-  _generateHTML(result) {
+  _generateHTML() {
     const id = window.location.hash.slice(1);
 
     return `
