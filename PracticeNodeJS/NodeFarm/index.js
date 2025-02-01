@@ -61,8 +61,10 @@ const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const productDataObj = JSON.parse(data);
 
 const server = http.createServer((req, res) => {
-  const pathName = req.url;
-  if (pathName === "/" || pathName === "/overview") {
+  const { query, pathname } = url.parse(req.url, true);
+
+  // Overview page
+  if (pathname === "/" || pathname === "/overview") {
     res.writeHead(200, {
       "Content-Type": "text/html",
     });
@@ -74,16 +76,26 @@ const server = http.createServer((req, res) => {
     const output = templateOverview.replace("{%PRODUCT_CARDS%}", cardsHtml);
 
     res.end(output);
-  } else if (pathName === "/product") {
+
+    // Product page
+  } else if (pathname === "/product") {
     res.writeHead(200, {
       "Content-Type": "text/html",
     });
-    res.end(templateProduct);
-  } else if (pathName === "/api") {
+
+    const product = productDataObj[query.id];
+    const output = replateTemplate(templateProduct, product);
+
+    res.end(output);
+
+    // API
+  } else if (pathname === "/api") {
     res.writeHead(200, {
       "Content-Type": "application/json",
     });
     res.end(data);
+
+    // Not Found
   } else {
     res.writeHead(404, {
       "Content-Type": "text/html",
