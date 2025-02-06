@@ -1,4 +1,4 @@
-const AppError = require('./../utils/catchAsync');
+const AppError = require('./../utils/appError');
 
 function handleCastError(err) {
   const message = `Invalid ${err.path}: ${err.value}.`;
