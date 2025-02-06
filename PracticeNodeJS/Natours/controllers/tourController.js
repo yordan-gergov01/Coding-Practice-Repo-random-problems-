@@ -1,6 +1,7 @@
 const Tour = require('./../models/tourModel.js');
 const APIFeatures = require('./../utils/apiFeatures.js');
 const catchAsync = require('../utils/catchAsync.js');
+const AppError = require('../utils/appError.js');
 
 // Reading file and use the data (for learning purposes)
 // const tours = JSON.parse(
@@ -37,6 +38,10 @@ const getAllTours = catchAsync(async function (req, res, next) {
 const getTour = catchAsync(async function (req, res, next) {
   const tour = await Tour.findById(req.params.id);
 
+  if (!tour) {
+    return next(new AppError('No tour fount with that ID', 404));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -61,6 +66,11 @@ const updateTour = catchAsync(async function (req, res, next) {
     new: true,
     runValidators: true,
   });
+
+  if (!tour) {
+    return next(new AppError('No tour fount with that ID', 404));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -70,7 +80,12 @@ const updateTour = catchAsync(async function (req, res, next) {
 });
 
 const deleteTour = catchAsync(async function (req, res, next) {
-  await Tour.findByIdAndDelete(req.params.id);
+  const tour = await Tour.findByIdAndDelete(req.params.id);
+
+  if (!tour) {
+    return next(new AppError('No tour fount with that ID', 404));
+  }
+
   res.status(204).json({
     status: 'success',
     data: null,
