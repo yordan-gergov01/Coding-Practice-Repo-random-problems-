@@ -1,47 +1,54 @@
-function getAllUsers(req, res) {
-  res.status(500).json({
-    status: 'fail',
-    data: {
-      message: 'This route is not defined',
-    },
-  });
-}
+const User = require('./../models/userModel.js');
+const catchAsync = require('../utils/catchAsync.js');
 
-function getUser(req, res) {
-  res.status(500).json({
-    status: 'fail',
-    data: {
-      message: 'This route is not defined',
-    },
-  });
-}
+const getAllUsers = catchAsync(async function (req, res, next) {
+  const users = await User.find();
 
-function createNewUser(req, res) {
-  res.status(500).json({
-    status: 'fail',
+  // Send response
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
     data: {
-      message: 'This route is not defined',
+      users,
     },
   });
-}
+});
 
-function updateUser(req, res) {
+const getUser = function (req, res) {
   res.status(500).json({
     status: 'fail',
     data: {
       message: 'This route is not defined',
     },
   });
-}
+};
 
-function deleteUser(req, res) {
+const createNewUser = function (req, res) {
   res.status(500).json({
     status: 'fail',
     data: {
       message: 'This route is not defined',
     },
   });
-}
+};
+
+const updateUser = function (req, res) {
+  res.status(500).json({
+    status: 'fail',
+    data: {
+      message: 'This route is not defined',
+    },
+  });
+};
+
+const deleteUser = function (req, res) {
+  res.status(500).json({
+    status: 'fail',
+    data: {
+      message: 'This route is not defined',
+    },
+  });
+};
 
 module.exports = {
   getAllUsers,
