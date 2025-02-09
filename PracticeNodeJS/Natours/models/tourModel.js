@@ -105,7 +105,7 @@ const tourSchema = new mongoose.Schema(
       },
     ],
     guides: [
-      // Referencing tour guides
+      // Referencing tour guides (only contains the reference)
       {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
@@ -139,6 +139,16 @@ tourSchema.pre('save', function (next) {
 // Query middleware
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } });
+
+  next();
+});
+
+tourSchema.pre(/^find/, function (next) {
+  // with populate we filled up the guides with data
+  this.polulate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt',
+  });
   next();
 });
 
