@@ -39,7 +39,7 @@ const getTour = catchAsync(async function (req, res, next) {
   const tour = await Tour.findById(req.params.id);
 
   if (!tour) {
-    return next(new AppError('No tour fount with that ID', 404));
+    return next(new AppError('No tour found with that ID', 404));
   }
 
   res.status(200).json({
@@ -68,7 +68,7 @@ const updateTour = catchAsync(async function (req, res, next) {
   });
 
   if (!tour) {
-    return next(new AppError('No tour fount with that ID', 404));
+    return next(new AppError('No tour found with that ID', 404));
   }
 
   res.status(200).json({
@@ -83,7 +83,7 @@ const deleteTour = catchAsync(async function (req, res, next) {
   const tour = await Tour.findByIdAndDelete(req.params.id);
 
   if (!tour) {
-    return next(new AppError('No tour fount with that ID', 404));
+    return next(new AppError('No tour found with that ID', 404));
   }
 
   res.status(204).json({
