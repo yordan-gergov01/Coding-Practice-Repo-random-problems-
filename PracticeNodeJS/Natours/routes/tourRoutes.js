@@ -11,11 +11,17 @@ const {
   getMonthlyPlan,
 } = require('./../controllers/tourController');
 const { protect, restrictTo } = require('./../controllers/authController');
+const reviewRouter = require('./../routes/reviewRoutes');
 
 const router = express.Router();
-
 // Save here for refference (uncomment and see the function's docs)
 // router.param('id', checkId);
+
+// POST /tour/234fad4/reviews
+// GET /tour/234fad4/reviews
+// GET /tour/234fad4/reviews/94887fda
+
+router.use('/:tourId/reviews', reviewRouter);
 
 router.route('/top-5-cheap').get(aliasTopTours, getAllTours);
 router.route('/monthly-plan/:year').get(getMonthlyPlan);
