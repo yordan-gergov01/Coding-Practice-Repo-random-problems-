@@ -2,6 +2,8 @@ const User = require('./../models/userModel.js');
 const catchAsync = require('../utils/catchAsync.js');
 const AppError = require('./../utils/appError.js');
 
+const { deleteOne, updateOne, getOne, getAll } = require('./handleFactory.js');
+
 const filterObj = function (obj, ...allowedFields) {
   const newObj = {};
 
@@ -11,19 +13,6 @@ const filterObj = function (obj, ...allowedFields) {
 
   return newObj;
 };
-
-const getAllUsers = catchAsync(async function (req, res, next) {
-  const users = await User.find();
-
-  // Send response
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    data: {
-      users,
-    },
-  });
-});
 
 const updateMe = catchAsync(async function (req, res, next) {
   // 1) Create error if user POSTs password data
@@ -65,41 +54,19 @@ const deleteMe = catchAsync(async function (req, res, next) {
   });
 });
 
-const getUser = function (req, res) {
-  res.status(500).json({
-    status: 'fail',
-    data: {
-      message: 'This route is not defined',
-    },
+const createNewUser = (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'This route is not defined! Please use /signup instead',
   });
 };
 
-const createNewUser = function (req, res) {
-  res.status(500).json({
-    status: 'fail',
-    data: {
-      message: 'This route is not defined',
-    },
-  });
-};
+const getUser = getOne(User);
+const getAllUsers = getAll(User);
 
-const updateUser = function (req, res) {
-  res.status(500).json({
-    status: 'fail',
-    data: {
-      message: 'This route is not defined',
-    },
-  });
-};
-
-const deleteUser = function (req, res) {
-  res.status(500).json({
-    status: 'fail',
-    data: {
-      message: 'This route is not defined',
-    },
-  });
-};
+// Do NOT update passwords with this!
+const updateUser = updateOne(User);
+const deleteUser = deleteOne(User);
 
 module.exports = {
   getAllUsers,
