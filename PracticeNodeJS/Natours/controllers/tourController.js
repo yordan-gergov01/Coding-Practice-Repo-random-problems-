@@ -29,18 +29,6 @@ const createNewTour = createOne(Tour);
 const updateTour = updateOne(Tour);
 
 const deleteTour = deleteOne(Tour);
-// const deleteTour = catchAsync(async function (req, res, next) {
-//   const tour = await Tour.findByIdAndDelete(req.params.id);
-
-//   if (!tour) {
-//     return next(new AppError('No tour found with that ID', 404));
-//   }
-
-//   res.status(204).json({
-//     status: 'success',
-//     data: null,
-//   });
-// });
 
 const getTourStats = catchAsync(async function (req, res, next) {
   const stats = await Tour.aggregate([
