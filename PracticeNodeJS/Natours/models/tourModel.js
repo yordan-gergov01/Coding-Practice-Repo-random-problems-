@@ -122,6 +122,13 @@ tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
 
+// Virtual populate (when getting one tour, we want to get an array with all the reviews for it)
+tourSchema.virtual('reviews', {
+  ref: 'Reviews',
+  foreignField: 'tour',
+  localField: '_id',
+});
+
 // Document middleware: runs before .save() and .create()
 tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
