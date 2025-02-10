@@ -7,6 +7,7 @@ const {
   getOne,
   getAll,
 } = require('./handleFactory.js');
+const AppError = require('../utils/appError.js');
 
 // Reading file and use the data (for learning purposes)
 // const tours = JSON.parse(
@@ -105,6 +106,35 @@ const getMonthlyPlan = catchAsync(async function (req, res, next) {
   });
 });
 
+const getToursWithin = catchAsync(async function (req, res, next) {
+  const { distance, latlng, unit } = req.params;
+  const [lat, lng] = latlng.split(',');
+
+  // these numbers are the radius of the Earth
+  const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
+
+  if (!lat || !lng) {
+    next(
+      new AppError(
+        'Please provide latitude and longitude in the format lat,lng.',
+        400
+      )
+    );
+  }
+
+  const tours = await Tour.find({
+    startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
+  });
+
+  res.status(200).json({
+    status: 'success',
+    results: tours.length,
+    data: {
+      data: tours,
+    },
+  });
+});
+
 module.exports = {
   getAllTours,
   getTour,
@@ -114,4 +144,5 @@ module.exports = {
   aliasTopTours,
   getTourStats,
   getMonthlyPlan,
+  getToursWithin,
 };
