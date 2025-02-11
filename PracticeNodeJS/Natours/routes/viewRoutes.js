@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get('/', getOverview);
 
-router.get('/tour', getTour);
+// because we want to see slug in the URL instead of id
+router.get('/tour/:slug', getTour);
 
 module.exports = router;

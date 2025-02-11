@@ -130,7 +130,7 @@ tourSchema.virtual('durationWeeks').get(function () {
 
 // Virtual populate (when getting one tour, we want to get an array with all the reviews for it)
 tourSchema.virtual('reviews', {
-  ref: 'Reviews',
+  ref: 'Review',
   foreignField: 'tour',
   localField: '_id',
 });
