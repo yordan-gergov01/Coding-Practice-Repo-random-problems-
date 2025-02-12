@@ -13,7 +13,7 @@ const getOverview = catchAsync(async function (req, res) {
   });
 });
 
-const getTour = catchAsync(async function (req, res) {
+const getTour = catchAsync(async function (req, res, next) {
   // 1) Get the data, for the requested tour (including reviews and guides)
   const tour = await Tour.findOne({ slug: req.params.slug }).populate({
     path: 'reviews',
@@ -27,4 +27,16 @@ const getTour = catchAsync(async function (req, res) {
   });
 });
 
-module.exports = { getOverview, getTour };
+const getLoginForm = function (req, res) {
+  res.status(200).render('login', {
+    title: 'Log into your account',
+  });
+};
+
+const getSignupForm = function (req, res) {
+  res.status(200).render('signup', {
+    title: 'Signup and create your account',
+  });
+};
+
+module.exports = { getOverview, getTour, getLoginForm, getSignupForm };
