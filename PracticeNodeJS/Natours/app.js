@@ -61,6 +61,17 @@ app.use(
   })
 );
 
+// Change the Content Security Policies with middleware to render map
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "script-src 'self' https://api.mapbox.com blob:; " +
+      "style-src 'self' 'unsafe-inline' https://api.mapbox.com https://fonts.googleapis.com; " +
+      "worker-src 'self' blob:;"
+  );
+  next();
+});
+
 // Standard way for routing
 // app.get('/api/v1/tours', getAllTours);
 // app.get('/api/v1/tours/:id', getTour);
