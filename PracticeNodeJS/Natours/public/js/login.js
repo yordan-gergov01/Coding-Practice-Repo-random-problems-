@@ -26,7 +26,7 @@ export const login = async function (email, password) {
       showAlert('error', resData.message);
     }
   } catch (err) {
-    alert(err.message || 'Something went wrong');
+    showAlert(err.message || 'Something went wrong');
   }
 };
 
