@@ -1,0 +1,31 @@
+import { showAlert } from './alerts';
+
+export const login = async function (email, password) {
+  const data = {
+    email,
+    password,
+  };
+
+  try {
+    const res = await fetch('http://127.0.0.1:3000/api/v1/users/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    const resData = await res.json();
+
+    if (resData.status === 'success') {
+      showAlert('success', 'Logged in successfully!');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    } else {
+      showAlert('error', resData.message);
+    }
+  } catch (err) {
+    alert(err.message || 'Something went wrong');
+  }
+};

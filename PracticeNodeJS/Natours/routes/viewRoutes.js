@@ -7,7 +7,11 @@ const {
   getSignupForm,
 } = require('./../controllers/viewsController');
 
+const { protect, isLoggedIn } = require('./../controllers/authController');
+
 const router = express.Router();
+
+router.use(isLoggedIn);
 
 router.get('/', getOverview);
 
