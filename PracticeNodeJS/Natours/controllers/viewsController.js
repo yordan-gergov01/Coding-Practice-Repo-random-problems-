@@ -45,4 +45,16 @@ const getSignupForm = function (req, res) {
   });
 };
 
-module.exports = { getOverview, getTour, getLoginForm, getSignupForm };
+const getAccount = function (req, res) {
+  res.status(200).render('account', {
+    title: 'Your account',
+  });
+};
+
+module.exports = {
+  getOverview,
+  getTour,
+  getLoginForm,
+  getSignupForm,
+  getAccount,
+};
