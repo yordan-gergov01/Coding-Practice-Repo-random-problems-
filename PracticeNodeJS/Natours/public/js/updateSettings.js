@@ -1,13 +1,19 @@
 import { showAlert } from './alerts';
 
-export const updateData = async function (name, email) {
-  const data = {
-    name,
-    email,
-  };
+// type is either 'password' or 'data'
+export const updateSettings = async function (data, type) {
+  //   const updateData = {
+  //     name,
+  //     email,
+  //   };
 
   try {
-    const res = await fetch('http://127.0.0.1:3000/api/v1/users/updateMe', {
+    const url =
+      type === 'password'
+        ? 'http://127.0.0.1:3000/api/v1/users/updateMyPassword'
+        : 'http://127.0.0.1:3000/api/v1/users/updateMe';
+
+    const res = await fetch(url, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -18,7 +24,7 @@ export const updateData = async function (name, email) {
     const resData = await res.json();
 
     if (resData.status === 'success') {
-      showAlert('success', 'Data is successfully updated.');
+      showAlert('success', `${type.toUpperCase()} is successfully updated.`);
     }
   } catch (err) {
     showAlert(err.message || 'Something went wrong.');
