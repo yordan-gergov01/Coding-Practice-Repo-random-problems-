@@ -23,7 +23,10 @@ const userSchema = new mongoose.Schema({
     // important to exclude the password from get request (in login)
     select: false,
   },
-  photo: String,
+  photo: {
+    type: String,
+    default: 'default.jpg',
+  },
   role: {
     type: String,
     enum: ['user', 'guide', 'lead-guide', 'admin'],
