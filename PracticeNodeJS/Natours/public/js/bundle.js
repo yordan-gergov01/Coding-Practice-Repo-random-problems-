@@ -6819,40 +6819,44 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 // type is either 'password' or 'data'
 var updateSettings = exports.updateSettings = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(data, type) {
-    var url, res, resData;
+    var url, options, res, resData;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
           url = type === 'password' ? 'http://127.0.0.1:3000/api/v1/users/updateMyPassword' : 'http://127.0.0.1:3000/api/v1/users/updateMe';
-          _context.next = 4;
-          return fetch(url, {
+          options = {
             method: 'PATCH',
-            headers: {
+            body: data
+          };
+          if (!(data instanceof FormData)) {
+            options.headers = {
               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          });
-        case 4:
+            };
+            options.body = JSON.stringify(data);
+          }
+          _context.next = 6;
+          return fetch(url, options);
+        case 6:
           res = _context.sent;
-          _context.next = 7;
+          _context.next = 9;
           return res.json();
-        case 7:
+        case 9:
           resData = _context.sent;
           if (resData.status === 'success') {
             (0, _alerts.showAlert)('success', "".concat(type.toUpperCase(), " is successfully updated."));
           }
-          _context.next = 14;
+          _context.next = 16;
           break;
-        case 11:
-          _context.prev = 11;
+        case 13:
+          _context.prev = 13;
           _context.t0 = _context["catch"](0);
           (0, _alerts.showAlert)(_context.t0.message || 'Something went wrong.');
-        case 14:
+        case 16:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 11]]);
+    }, _callee, null, [[0, 13]]);
   }));
   return function updateSettings(_x, _x2) {
     return _ref.apply(this, arguments);
@@ -7024,12 +7028,11 @@ if (logOutBtn) {
 if (userDataForm) {
   userDataForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    var email = document.getElementById('email').value;
-    var name = document.getElementById('name').value;
-    (0, _updateSettings.updateSettings)({
-      name: name,
-      email: email
-    }, 'data');
+    var form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    (0, _updateSettings.updateSettings)(form, 'data');
   });
 }
 if (userPasswordForm) {

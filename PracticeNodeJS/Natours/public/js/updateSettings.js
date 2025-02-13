@@ -2,24 +2,23 @@ import { showAlert } from './alerts';
 
 // type is either 'password' or 'data'
 export const updateSettings = async function (data, type) {
-  //   const updateData = {
-  //     name,
-  //     email,
-  //   };
-
   try {
     const url =
       type === 'password'
         ? 'http://127.0.0.1:3000/api/v1/users/updateMyPassword'
         : 'http://127.0.0.1:3000/api/v1/users/updateMe';
 
-    const res = await fetch(url, {
+    const options = {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+      body: data,
+    };
+
+    if (!(data instanceof FormData)) {
+      options.headers = { 'Content-Type': 'application/json' };
+      options.body = JSON.stringify(data);
+    }
+
+    const res = await fetch(url, options);
 
     const resData = await res.json();
 
