@@ -2,19 +2,22 @@ const User = require('./../models/userModel.js');
 const catchAsync = require('../utils/catchAsync.js');
 const AppError = require('./../utils/appError.js');
 const multer = require('multer');
+const sharp = require('sharp');
 
 const { deleteOne, updateOne, getOne, getAll } = require('./handleFactory.js');
 
-const multerStorage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, 'public/img/users');
-  },
-  filename: (req, file, callback) => {
-    // create unique name of the file with photo extension (jpeg or png)
-    const extension = file.mimetype.split('/')[1];
-    callback(null, `user-${req.user.id}-${Date.now()}.${extension}`);
-  },
-});
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, callback) => {
+//     callback(null, 'public/img/users');
+//   },
+//   filename: (req, file, callback) => {
+//     // create unique name of the file with photo extension (jpeg or png)
+//     const extension = file.mimetype.split('/')[1];
+//     callback(null, `user-${req.user.id}-${Date.now()}.${extension}`);
+//   },
+// });
+
+const multerStorage = multer.memoryStorage();
 
 // test if the uploaded file is an image and pass true or false into callback (it works for all other types of files)
 const multerFilter = function (req, file, callback) {
@@ -34,6 +37,20 @@ const upload = multer({
 });
 
 const uploadUserPhoto = upload.single('photo');
+
+const resizeUserPhoto = function (req, res, next) {
+  if (!req.file) return next();
+
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+
+  sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/img/users/${req.file.filename}`);
+
+  next();
+};
 
 const filterObj = function (obj, ...allowedFields) {
   const newObj = {};
@@ -116,4 +133,5 @@ module.exports = {
   deleteMe,
   getMe,
   uploadUserPhoto,
+  resizeUserPhoto,
 };
