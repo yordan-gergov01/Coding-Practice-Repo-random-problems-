@@ -16,14 +16,21 @@ const getCheckoutSession = catchAsync(async function (req, res, next) {
     cancel_url: `${req.protocol}://${req.get('host')}/tour/${bookedTour.slug}`,
     customer_email: req.user.email,
     client_reference_id: req.params.tourId,
+    mode: 'payment',
     line_items: [
       {
-        name: `${bookedTour.name} Tour`,
-        description: bookedTour.summary,
-        images: [`http://www.natours.dev/img/tours/${bookedTour.imageCover}`],
-        amount: bookedTour.price * 100,
-        currency: 'usd',
         quantity: 1,
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: `${bookedTour.name} Tour`,
+            description: bookedTour.summary,
+            images: [
+              `http://www.natours.dev/img/tours/${bookedTour.imageCover}`,
+            ],
+          },
+          unit_amount: bookedTour.price * 100, // Цената в центове
+        },
       },
     ],
   });

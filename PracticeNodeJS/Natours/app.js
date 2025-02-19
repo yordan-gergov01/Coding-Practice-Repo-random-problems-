@@ -68,11 +68,11 @@ app.use(
   })
 );
 
-// Change the Content Security Policies with middleware to render map
+// Change the Content Security Policies with middleware to render map and implement stripe
 app.use((req, res, next) => {
   res.setHeader(
     'Content-Security-Policy',
-    "script-src 'self' https://api.mapbox.com blob:; " +
+    "script-src 'self' https://js.stripe.com https://api.mapbox.com blob:; " +
       "style-src 'self' 'unsafe-inline' https://api.mapbox.com https://fonts.googleapis.com; " +
       "worker-src 'self' blob:;"
   );
