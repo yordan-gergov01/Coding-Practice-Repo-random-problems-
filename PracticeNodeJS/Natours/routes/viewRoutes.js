@@ -11,11 +11,11 @@ const {
 } = require('./../controllers/viewsController');
 
 const { protect, isLoggedIn } = require('./../controllers/authController');
-const { createBookingCheckout } = require('../controllers/bookingController');
+const { webhookCheckout } = require('../controllers/bookingController');
 
 const router = express.Router();
 
-router.get('/', createBookingCheckout, isLoggedIn, getOverview);
+router.get('/', isLoggedIn, getOverview);
 
 // because we want to see slug in the URL instead of id
 router.get('/tour/:slug', isLoggedIn, getTour);
