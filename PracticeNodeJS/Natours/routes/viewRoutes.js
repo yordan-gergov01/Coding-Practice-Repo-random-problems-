@@ -8,12 +8,14 @@ const {
   getAccount,
   updateUserData,
   getMyTours,
+  alerts,
 } = require('./../controllers/viewsController');
 
 const { protect, isLoggedIn } = require('./../controllers/authController');
-const { webhookCheckout } = require('../controllers/bookingController');
 
 const router = express.Router();
+
+router.use(alerts);
 
 router.get('/', isLoggedIn, getOverview);
 
