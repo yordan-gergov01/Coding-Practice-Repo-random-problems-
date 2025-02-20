@@ -4,7 +4,13 @@ const Booking = require('./../models/bookingModel.js');
 const catchAsync = require('../utils/catchAsync.js');
 const factory = require('./handleFactory.js');
 
-const {} = require('./handleFactory.js');
+const {
+  getOne,
+  getAll,
+  createOne,
+  deleteOne,
+  updateOne,
+} = require('./handleFactory.js');
 
 const getCheckoutSession = catchAsync(async function (req, res, next) {
   // 1) Get the currently booked tour
@@ -55,4 +61,18 @@ const createBookingCheckout = catchAsync(async function (req, res, next) {
   res.redirect(req.originalUrl.split('?')[0]);
 });
 
-module.exports = { getCheckoutSession, createBookingCheckout };
+const getAllBookings = getAll(Booking);
+const getBooking = getOne(Booking);
+const createNewBooking = createOne(Booking);
+const updateBooking = updateOne(Booking);
+const deleteBooking = deleteOne(Booking);
+
+module.exports = {
+  getCheckoutSession,
+  createBookingCheckout,
+  getAllBookings,
+  getBooking,
+  createNewBooking,
+  updateBooking,
+  deleteBooking,
+};
