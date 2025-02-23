@@ -15,6 +15,34 @@ const friends = [
   },
 ];
 
+app.use((req, res, next) => {
+  const start = Date.now();
+  next();
+  const delta = Date.now() - start;
+  console.log(`${req.method} ${req.url} ${delta}ms`);
+});
+
+app.use(express.json());
+
+app.post("/friends", (req, res) => {
+  if (!req.body.name) {
+    return res.status(400).json({
+      error: "The name does not exist",
+    });
+  }
+
+  const newFriend = {
+    id: friends.length,
+    name: req.body.name,
+  };
+
+  friends.push(newFriend);
+
+  res.status(200).json({
+    newFriend,
+  });
+});
+
 app.get("/friends", (req, res) => {
   res.json(friends);
 });
