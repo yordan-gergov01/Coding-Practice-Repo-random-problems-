@@ -2,7 +2,7 @@
 
 const { Buffer } = require("buffer");
 
-const memoryContainer = Buffer.alloc(3); // 24 buts / 8 = 3 bytes
+const memoryContainer = Buffer.alloc(3); // 24 bits / 8 = 3 bytes
 
 memoryContainer[0] = 0x48;
 memoryContainer[1] = 0x69;
