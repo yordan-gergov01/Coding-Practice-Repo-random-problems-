@@ -6,6 +6,7 @@ const PORT = 9000;
 const server = http.createServer();
 
 server.on("request", async (req, res) => {
+  // Serving the HTML
   if (req.url === "/" && req.method === "GET") {
     res.setHeader("Content-Type", "text/html");
 
@@ -16,6 +17,7 @@ server.on("request", async (req, res) => {
     fileHtmlStream.pipe(res);
   }
 
+  // Serving the CSS
   if (req.url === "/styles.css" && req.method === "GET") {
     res.setHeader("Content-Type", "text/css");
 
@@ -25,6 +27,7 @@ server.on("request", async (req, res) => {
     fileCssStream.pipe(res);
   }
 
+  // Serving the JavaScript
   if (req.url === "/script.js" && req.method === "GET") {
     res.setHeader("Content-Type", "application/javascript");
 
@@ -32,6 +35,41 @@ server.on("request", async (req, res) => {
     const fileJSStream = fileJSHandle.createReadStream();
 
     fileJSStream.pipe(res);
+  }
+
+  if (req.url === "/login" && req.method === "POST") {
+    res.setHeader("Content-Type", "application/json");
+    res.statusCode = 200;
+
+    const body = {
+      message: "Logging you in...",
+    };
+
+    res.end(JSON.stringify(body));
+  }
+
+  if (req.url === "/user" && req.method === "PUT") {
+    res.setHeader("Content-Type", "application/json");
+    res.statusCode = 401;
+
+    const body = {
+      message: "You first have to login...",
+    };
+
+    res.end(JSON.stringify(body));
+  }
+
+  // upload route
+  if (req.url === "/upload" && req.method === "PUT") {
+    const fileHandle = await fs.open("./storage/image.jpg", "w");
+    const fileStream = fileHandle.createWriteStream();
+    res.setHeader("Content-Type", "application/json");
+
+    req.pipe(fileStream);
+
+    req.on("end", () => {
+      req.end(JSON.stringify({ message: "File was uploaded successfully!" }));
+    });
   }
 });
 
