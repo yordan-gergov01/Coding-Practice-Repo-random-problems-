@@ -9,11 +9,29 @@ server.on("request", async (req, res) => {
   if (req.url === "/" && req.method === "GET") {
     res.setHeader("Content-Type", "text/html");
 
-    const fileHandle = await fs.open("./public/index.html", "r");
-    const fileStream = fileHandle.createReadStream();
+    const fileHtmlHandle = await fs.open("./public/index.html", "r");
+    const fileHtmlStream = fileHtmlHandle.createReadStream();
 
     // the pipe here automatically handles the drain event (it is the same thing like .on("data") event)
-    fileStream.pipe(res);
+    fileHtmlStream.pipe(res);
+  }
+
+  if (req.url === "/styles.css" && req.method === "GET") {
+    res.setHeader("Content-Type", "text/css");
+
+    const fileCssHandle = await fs.open("./public/styles.css", "r");
+    const fileCssStream = fileCssHandle.createReadStream();
+
+    fileCssStream.pipe(res);
+  }
+
+  if (req.url === "/script.js" && req.method === "GET") {
+    res.setHeader("Content-Type", "application/javascript");
+
+    const fileJSHandle = await fs.open("./public/script.js", "r");
+    const fileJSStream = fileJSHandle.createReadStream();
+
+    fileJSStream.pipe(res);
   }
 });
 
