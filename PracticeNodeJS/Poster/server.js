@@ -23,6 +23,10 @@ const PORT = 8000;
 
 const server = new Framework();
 
+server.beforeEach((req, res, next) => {});
+server.beforeEach((req, res, next) => {});
+server.beforeEach((req, res, next) => {});
+
 // -----Files Routes ----- //
 server.route("get", "/", (req, res) => {
   res.sendFile("./public/index.html", "text/html");
@@ -47,11 +51,16 @@ server.route("get", "/api/user", (req, res) => {
 
   if (session) {
     // Send the user's profile
-    console.log("Sending user info...");
+    const user = USERS.find((user) => user.id === session.userId);
+    res.json({ username: user.username, name: user.name });
   } else {
     res.status(401).json({ error: "Unauthorized" });
   }
 });
+
+server.route("put", "/api/user", (req, res) => {});
+
+server.route("delete", "/api/logout", (req, res) => {});
 
 server.route("get", "/api/posts", (req, res) => {
   const posts = POSTS.map((post) => {
@@ -90,6 +99,8 @@ server.route("post", "/api/login", (req, res) => {
     }
   });
 });
+
+server.route("post", "/api/posts", (req, res) => {});
 
 server.listen(PORT, () => {
   console.log(`Server has started listening on port ${PORT}...`);
